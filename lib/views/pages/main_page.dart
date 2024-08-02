@@ -29,7 +29,7 @@ class MainPage extends GetView<MainViewModel> {
       bottomNavigationBar: Obx(
         () => BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
-          unselectedItemColor: const Color(0xFF9E9E9E),
+          unselectedItemColor: const Color(0xFF497B9C),
           selectedItemColor: AppColors.orange,
           backgroundColor: const Color(0xFF00152F),
           selectedFontSize: 12,

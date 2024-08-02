@@ -9,6 +9,10 @@ class AppTextStyle {
         fontSize: 12,
         color: color,
       );
+  static TextStyle body12B({Color color = Colors.white}) => bold.copyWith(
+        fontSize: 12,
+        color: color,
+      );
 
   static TextStyle body14R({Color color = Colors.white}) => regular.copyWith(
         fontSize: 14,
@@ -24,6 +28,11 @@ class AppTextStyle {
       );
   static TextStyle body16B({Color color = Colors.white}) => bold.copyWith(
         fontSize: 16,
+        color: color,
+      );
+
+  static TextStyle body20B({Color color = Colors.white}) => bold.copyWith(
+        fontSize: 20,
         color: color,
       );
 }

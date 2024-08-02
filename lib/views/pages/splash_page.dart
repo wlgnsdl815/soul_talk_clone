@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:soul_talk_clone/utils/styles/app_colors.dart';
 import 'package:soul_talk_clone/views/pages/login_page.dart';
+import 'package:soul_talk_clone/views/pages/main_page.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -12,10 +14,30 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
+  final minWaitTime = Future.delayed(const Duration(seconds: 2));
+
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 2), () {
+    _checkLoginStatus();
+  }
+
+  Future<void> _checkLoginStatus() async {
+    await minWaitTime;
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (!mounted) return;
+
+    if (user != null) {
+      Navigator.pushReplacement(
+        context,
+        PageRouteBuilder(
+          pageBuilder: (context, animation1, animation2) => const MainPage(),
+          transitionDuration: Duration.zero,
+          reverseTransitionDuration: Duration.zero,
+        ),
+      );
+    } else {
       Navigator.pushReplacement(
         context,
         PageRouteBuilder(
@@ -24,7 +46,7 @@ class _SplashPageState extends State<SplashPage> {
           reverseTransitionDuration: Duration.zero,
         ),
       );
-    });
+    }
   }
 
   @override

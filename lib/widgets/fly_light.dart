@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:soul_talk_clone/utils/styles/app_colors.dart';
 
 class FlyLight extends StatefulWidget {
   final Widget child;
@@ -71,9 +72,9 @@ class BackgroundPainter extends CustomPainter {
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
       colors: [
-        Color(0xFF00152F),
-        Color(0xFF00152F),
-        Color.fromARGB(255, 0, 59, 135),
+        AppColors.darkBlue,
+        AppColors.darkBlue,
+        AppColors.lightBlue,
       ],
     );
     final Paint paint = Paint()..shader = gradient.createShader(rect);

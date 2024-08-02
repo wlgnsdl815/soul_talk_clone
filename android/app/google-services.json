@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "622762646151",
+    "project_id": "soul-talk-clone",
+    "storage_bucket": "soul-talk-clone.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:622762646151:android:beddb1375d99b597f57622",
+        "android_client_info": {
+          "package_name": "com.example.soul_talk_clone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "622762646151-kv3jhfbiv8l2pfuke0bl7g34ubnc65pt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.soul_talk_clone",
+            "certificate_hash": "060af94feeb6dc11cab20451f9f257998eae085e"
+          }
+        },
+        {
+          "client_id": "622762646151-4ga07t01euc2dlmn6150o0i63pndp7o5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDztijK1waKhU4UK2qNXeyLzoPR8HfflLQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "622762646151-4ga07t01euc2dlmn6150o0i63pndp7o5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "622762646151-em050qec55c29hm9d0pk8favgvp7au52.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.soulTalkClone"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

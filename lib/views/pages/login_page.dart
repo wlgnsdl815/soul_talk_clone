@@ -13,6 +13,8 @@ import 'package:soul_talk_clone/widgets/default_layout.dart';
 class LoginPage extends GetView<LoginViewModel> {
   const LoginPage({super.key});
 
+  static const String route = '/login';
+
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
@@ -116,7 +118,10 @@ class LoginPage extends GetView<LoginViewModel> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   SvgPicture.asset('assets/kakao.svg'),
-                  SvgPicture.asset('assets/google.svg'),
+                  InkWell(
+                    onTap: () => controller.signInWithGoogle(),
+                    child: SvgPicture.asset('assets/google.svg'),
+                  ),
                   SvgPicture.asset('assets/apple.svg'),
                 ],
               )

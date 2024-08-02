@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:soul_talk_clone/utils/styles/app_text_styles.dart';
 import 'package:soul_talk_clone/view_models/sign_up_view_model.dart';
 import 'package:soul_talk_clone/widgets/auth_text_field.dart';
+import 'package:soul_talk_clone/widgets/default_dialog.dart';
 import 'package:soul_talk_clone/widgets/default_layout.dart';
 
 class SignUpPage extends GetView<SignUpViewModel> {
@@ -50,7 +51,26 @@ class SignUpPage extends GetView<SignUpViewModel> {
                         return Padding(
                           padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
+                                  .hasMatch(controller.email.value)) {
+                                Get.dialog(
+                                  DefaultDialog(
+                                    content: '이메일을 올바르게 입력해주세요',
+                                    onConfirm: () => Get.back(),
+                                  ),
+                                );
+                              } else {
+                                controller.sendVerificationEmail();
+                                Get.dialog(
+                                  DefaultDialog(
+                                    content:
+                                        '인증번호가 해당 이메일로 발송되었습니다.\n인증번호 확인 후 인증을 완료해주세요.\n메일 수신이 되지 않는 경우는 스팸 메일함을 확인해주세요!',
+                                    onConfirm: () => Get.back(),
+                                  ),
+                                );
+                              }
+                            },
                             style: ButtonStyle(
                               backgroundColor: WidgetStateProperty.all(
                                 Colors.black.withOpacity(0.3),
@@ -76,6 +96,7 @@ class SignUpPage extends GetView<SignUpViewModel> {
                   _buildTextField(
                     title: '비밀번호',
                     hintText: '8자 이상 영문/숫자 조합',
+                    obscureText: true,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return '비밀번호를 입력해주세요';
@@ -92,6 +113,7 @@ class SignUpPage extends GetView<SignUpViewModel> {
                   _buildTextField(
                     title: '비밀번호 확인',
                     hintText: '8자 이상 영문/숫자 조합',
+                    obscureText: true,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return '비밀번호를 다시 입력해주세요';
@@ -127,35 +149,36 @@ class SignUpPage extends GetView<SignUpViewModel> {
       ),
     );
   }
-}
 
-Widget _buildTextField({
-  required String title,
-  required String hintText,
-  String? Function(String?)? validator,
-  ValueChanged<String>? onChanged,
-}) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 20),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Text(
-              title,
-              style: AppTextStyle.body16B(),
-            ),
-            Text(' *', style: AppTextStyle.body16B(color: Colors.red)),
-          ],
-        ),
-        const Gap(10),
-        AuthTextField(
-          hintText: hintText,
-          validator: validator,
-          onChanged: onChanged,
-        ),
-      ],
-    ),
-  );
+  Widget _buildTextField(
+      {required String title,
+      required String hintText,
+      String? Function(String?)? validator,
+      ValueChanged<String>? onChanged,
+      bool? obscureText}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Text(
+                title,
+                style: AppTextStyle.body16B(),
+              ),
+              Text(' *', style: AppTextStyle.body16B(color: Colors.red)),
+            ],
+          ),
+          const Gap(10),
+          AuthTextField(
+            hintText: hintText,
+            validator: validator,
+            onChanged: onChanged,
+            obscureText: obscureText,
+          ),
+        ],
+      ),
+    );
+  }
 }
