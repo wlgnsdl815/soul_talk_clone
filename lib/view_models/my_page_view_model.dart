@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:soul_talk_clone/data_source/auth_data_source.dart';
@@ -6,7 +5,6 @@ import 'package:soul_talk_clone/utils/navigation/app_routes.dart';
 
 class MyPageViewModel extends GetxController {
   final AuthDataSource _authDataSource = Get.find<AuthDataSource>();
-  User? user = FirebaseAuth.instance.currentUser;
 
   void editProfile() {
     print('프로필 수정 tapped');
@@ -49,7 +47,6 @@ class MyPageViewModel extends GetxController {
   }
 
   Future<void> signOut() async {
-    await _authDataSource.signOut();
     Get.offAndToNamed(AppRoutes.login);
   }
 

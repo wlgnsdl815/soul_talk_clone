@@ -10,7 +10,6 @@ class LoginViewModel extends GetxController {
 
   Future<void> signInWithGoogle() async {
     isLoading.value = true;
-    await _authDataSource.signInWithGoogle();
     Get.offAllNamed(AppRoutes.main);
     isLoading.value = false;
   }

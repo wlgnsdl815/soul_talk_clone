@@ -61,7 +61,6 @@ class SignUpPage extends GetView<SignUpViewModel> {
                                   ),
                                 );
                               } else {
-                                controller.sendVerificationEmail();
                                 Get.dialog(
                                   DefaultDialog(
                                     content:

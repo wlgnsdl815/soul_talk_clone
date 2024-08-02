@@ -33,13 +33,13 @@ class MyPageScreen extends GetView<MyPageViewModel> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(100),
               ),
-              child: Image.network(controller.user!.photoURL!),
+              // child: Image.network(controller.user!.photoURL!),
             ),
             const Gap(10),
-            Text(
-              controller.user!.displayName!,
-              style: AppTextStyle.body14R(),
-            ),
+            // Text(
+            // controller.user!.displayName!,
+            // style: AppTextStyle.body14R(),
+            // ),
             Text(
               '고객님의 소울톡 앱은 1.0.0 최신 버전입니다',
               style: AppTextStyle.body14R(),
