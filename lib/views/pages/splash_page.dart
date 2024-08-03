@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:soul_talk_clone/data_source/local/user_data_source.dart';
 import 'package:soul_talk_clone/utils/navigation/app_routes.dart';
 import 'package:soul_talk_clone/utils/styles/app_colors.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -14,7 +15,7 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-  final SupabaseClient _supabaseClient = Supabase.instance.client;
+  final UserDataSource _userDataSource = Get.find<UserDataSource>();
   bool _isAuthenticated = false;
 
   @override
@@ -39,9 +40,15 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   Future<void> _checkAuthState() async {
-    final session = _supabaseClient.auth.currentSession;
+    final session = Supabase.instance.client.auth.currentSession;
+
     if (session != null) {
-      _isAuthenticated = true;
+      final user = await _userDataSource.getUserFromPreferences();
+      if (user != null) {
+        _isAuthenticated = true;
+      } else {
+        _isAuthenticated = false;
+      }
     } else {
       _isAuthenticated = false;
     }

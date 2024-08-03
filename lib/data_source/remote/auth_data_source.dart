@@ -1,7 +1,8 @@
 import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart' as kakao;
+import 'package:soul_talk_clone/models/user_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthDataSource extends GetxService {
@@ -9,10 +10,10 @@ class AuthDataSource extends GetxService {
 
   Future<void> signInWithKakao() async {
     try {
-      bool isInstalled = await isKakaoTalkInstalled();
-      OAuthToken token = isInstalled
-          ? await UserApi.instance.loginWithKakaoTalk()
-          : await UserApi.instance.loginWithKakaoAccount();
+      bool isInstalled = await kakao.isKakaoTalkInstalled();
+      kakao.OAuthToken token = isInstalled
+          ? await kakao.UserApi.instance.loginWithKakaoTalk()
+          : await kakao.UserApi.instance.loginWithKakaoAccount();
 
       if (token.idToken != null) {
         final response = await _supabaseClient.auth.signInWithIdToken(
@@ -38,15 +39,41 @@ class AuthDataSource extends GetxService {
       }
 
       final googleAuth = await googleUser.authentication;
-
       final response = await _supabaseClient.auth.signInWithIdToken(
         provider: OAuthProvider.google,
         idToken: googleAuth.idToken!,
       );
 
-      log('구글 로그인: ${response.user.toString()}');
+      final user = response.user;
+
+      if (user != null) {
+        await _supabaseClient.from('users').upsert({
+          'id': user.id,
+          'email': user.email,
+          'name': googleUser.displayName ?? 'Unknown',
+          'profile_image_url': googleUser.photoUrl,
+        });
+        log('구글 로그인 성공: ${user.email}, 이름: ${googleUser.displayName}');
+      }
     } catch (e) {
       log(e.toString(), name: 'AuthDataSource :: signInWithGoogle');
     }
   }
+
+  Future<UserModel?> getCurrentUser() async {
+    final user = _supabaseClient.auth.currentUser;
+    if (user != null) {
+      final response = await _supabaseClient
+          .from('users')
+          .select()
+          .eq('id', user.id)
+          .single();
+
+      final userModel = UserModel.fromMap(response);
+      return userModel;
+    }
+    return null;
+  }
+
+  Future<void> signOut() async => await _supabaseClient.auth.signOut();
 }

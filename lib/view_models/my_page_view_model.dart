@@ -1,14 +1,19 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:soul_talk_clone/data_source/auth_data_source.dart';
+import 'package:soul_talk_clone/data_source/local/user_data_source.dart';
+import 'package:soul_talk_clone/data_source/remote/auth_data_source.dart';
+import 'package:soul_talk_clone/models/user_model.dart';
 import 'package:soul_talk_clone/utils/navigation/app_routes.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class MyPageViewModel extends GetxController {
+  final UserDataSource _userDataSource = Get.find<UserDataSource>();
   final AuthDataSource _authDataSource = Get.find<AuthDataSource>();
   final SupabaseClient supabaseClient = Supabase.instance.client;
+
+  RxBool isLoading = false.obs;
+
+  Rxn<UserModel> currentUser = Rxn();
 
   void editProfile() {
     print('프로필 수정 tapped');
@@ -98,34 +103,17 @@ class MyPageViewModel extends GetxController {
       ];
 
   Future<void> getUserProfile() async {
-    try {
-      final user = supabaseClient.auth.currentUser;
-      if (user == null) {
-        log('로그인된 유저가 없습니다.');
-        return;
-      }
-
-      final response = await supabaseClient
-          .from('profiles')
-          .select('full_name')
-          .eq('id', user.id)
-          .single();
-
-      print(response);
-
-      // if (response != null) {
-      //   log('프로필을 가져오는 데 실패했습니다: ${response.error!.message}');
-      // } else {
-      //   final userProfile = response.data;
-      //   log('로그인된 유저 이름: ${userProfile['full_name']}');
-      // }
-    } catch (e) {
-      log('프로필을 가져오는 중 오류가 발생했습니다: $e');
-    }
+    isLoading.value = true;
+    currentUser.value = await _userDataSource.getUserFromPreferences();
+    isLoading.value = false;
   }
 
   Future<void> signOut() async {
+    isLoading.value = true;
+    await _authDataSource.signOut();
+    await _userDataSource.clearUserFromPreferences();
     Get.offAndToNamed(AppRoutes.login);
+    isLoading.value = false;
   }
 
   @override
