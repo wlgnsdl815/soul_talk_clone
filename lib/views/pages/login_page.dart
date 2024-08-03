@@ -117,8 +117,11 @@ class LoginPage extends GetView<LoginViewModel> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  SvgPicture.asset('assets/kakao.svg'),
-                  InkWell(
+                  GestureDetector(
+                    onTap: () => controller.signInWithKakao(),
+                    child: SvgPicture.asset('assets/kakao.svg'),
+                  ),
+                  GestureDetector(
                     onTap: () => controller.signInWithGoogle(),
                     child: SvgPicture.asset('assets/google.svg'),
                   ),

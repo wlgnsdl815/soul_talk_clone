@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:soul_talk_clone/utils/navigation/app_routes.dart';
 import 'package:soul_talk_clone/utils/styles/app_colors.dart';
-import 'package:soul_talk_clone/views/pages/login_page.dart';
-import 'package:soul_talk_clone/views/pages/main_page.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -13,11 +14,37 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-  final minWaitTime = Future.delayed(const Duration(seconds: 2));
+  final SupabaseClient _supabaseClient = Supabase.instance.client;
+  bool _isAuthenticated = false;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _initializeApp();
+    });
+  }
+
+  Future<void> _initializeApp() async {
+    await Future.wait([
+      _checkAuthState(),
+      Future.delayed(const Duration(seconds: 2)),
+    ]);
+
+    if (_isAuthenticated) {
+      Get.offAndToNamed(AppRoutes.main);
+    } else {
+      Get.offAndToNamed(AppRoutes.login);
+    }
+  }
+
+  Future<void> _checkAuthState() async {
+    final session = _supabaseClient.auth.currentSession;
+    if (session != null) {
+      _isAuthenticated = true;
+    } else {
+      _isAuthenticated = false;
+    }
   }
 
   @override

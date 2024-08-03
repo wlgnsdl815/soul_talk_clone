@@ -22,29 +22,17 @@
     <string>$(FLUTTER_BUILD_NAME)</string>
     <key>CFBundleSignature</key>
     <string>????</string>
-    <key>CFBundleURLTypes</key>
-    <array>
-        <dict>
-            <key>CFBundleTypeRole</key>
-            <string>Editor</string>
-            <key>CFBundleURLName</key>
-            <string>google_login</string>
-            <key>CFBundleURLSchemes</key>
-            <array>
-                <string>com.googleusercontent.apps.622762646151-em050qec55c29hm9d0pk8favgvp7au52</string>
-            </array>
-        </dict>
-    </array>
+    <key>CFBundleVersion</key>
+    <string>$(FLUTTER_BUILD_NUMBER)</string>
     <key>LSApplicationQueriesSchemes</key>
     <array>
         <string>google</string>
+        <string>kakaokompassauth</string>
         <string>googlechrome</string>
         <string>googlechrome-x-callback</string>
         <string>googlechrome-untrusted</string>
         <string>googlechrome-untrusted-x-callback</string>
     </array>
-    <key>CFBundleVersion</key>
-    <string>$(FLUTTER_BUILD_NUMBER)</string>
     <key>LSRequiresIPhoneOS</key>
     <true/>
     <key>UIApplicationSupportsIndirectInputEvents</key>
@@ -68,5 +56,21 @@
         <string>UIInterfaceOrientationLandscapeLeft</string>
         <string>UIInterfaceOrientationLandscapeRight</string>
     </array>
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+            <key>CFBundleURLName</key>
+            <string>kako_login</string>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>kakaod31c709da5b2fd6d5a5f3af706d808e9</string>
+                <string>com.googleusercontent.apps.4570759487-j1455ml4iafs6eskp60cftrpbqnefutj</string>
+            </array>
+        </dict>
+    </array>
+    <key>GIDClientID</key>
+    <string>4570759487-j1455ml4iafs6eskp60cftrpbqnefutj.apps.googleusercontent.com</string>
 </dict>
 </plist>

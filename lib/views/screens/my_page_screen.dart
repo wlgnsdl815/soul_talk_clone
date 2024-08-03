@@ -37,7 +37,7 @@ class MyPageScreen extends GetView<MyPageViewModel> {
             ),
             const Gap(10),
             // Text(
-            // controller.user!.displayName!,
+            // controller.user!.userMetadata,
             // style: AppTextStyle.body14R(),
             // ),
             Text(

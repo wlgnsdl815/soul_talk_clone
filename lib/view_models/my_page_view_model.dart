@@ -1,10 +1,14 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:soul_talk_clone/data_source/auth_data_source.dart';
 import 'package:soul_talk_clone/utils/navigation/app_routes.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class MyPageViewModel extends GetxController {
   final AuthDataSource _authDataSource = Get.find<AuthDataSource>();
+  final SupabaseClient supabaseClient = Supabase.instance.client;
 
   void editProfile() {
     print('프로필 수정 tapped');
@@ -44,10 +48,6 @@ class MyPageViewModel extends GetxController {
 
   void accountManagement() {
     print('계정 관리 tapped');
-  }
-
-  Future<void> signOut() async {
-    Get.offAndToNamed(AppRoutes.login);
   }
 
   List<ButtonItem> get buttonItems => [
@@ -96,6 +96,43 @@ class MyPageViewModel extends GetxController {
           onTap: signOut,
         ),
       ];
+
+  Future<void> getUserProfile() async {
+    try {
+      final user = supabaseClient.auth.currentUser;
+      if (user == null) {
+        log('로그인된 유저가 없습니다.');
+        return;
+      }
+
+      final response = await supabaseClient
+          .from('profiles')
+          .select('full_name')
+          .eq('id', user.id)
+          .single();
+
+      print(response);
+
+      // if (response != null) {
+      //   log('프로필을 가져오는 데 실패했습니다: ${response.error!.message}');
+      // } else {
+      //   final userProfile = response.data;
+      //   log('로그인된 유저 이름: ${userProfile['full_name']}');
+      // }
+    } catch (e) {
+      log('프로필을 가져오는 중 오류가 발생했습니다: $e');
+    }
+  }
+
+  Future<void> signOut() async {
+    Get.offAndToNamed(AppRoutes.login);
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    getUserProfile();
+  }
 }
 
 class ButtonItem {
