@@ -31,11 +31,14 @@ class AppElevatedButton extends StatelessWidget {
             ButtonType.blue => AppColors.deepBlue,
             ButtonType.white => Colors.white,
             ButtonType.home => Colors.transparent,
+            ButtonType.selected => AppColors.darkBlue,
           },
           borderRadius: BorderRadius.circular(16),
           border: buttonType == ButtonType.home
               ? Border.all(color: Colors.white)
-              : null,
+              : buttonType == ButtonType.selected
+                  ? Border.all(color: AppColors.orange)
+                  : null,
         ),
         child: Center(
           child: Text(title,
@@ -44,6 +47,8 @@ class AppElevatedButton extends StatelessWidget {
                 ButtonType.white =>
                   AppTextStyle.body16B(color: AppColors.deepBlue),
                 ButtonType.home => AppTextStyle.body12R(color: Colors.white),
+                ButtonType.selected =>
+                  AppTextStyle.body16B(color: AppColors.orange),
               }),
         ),
       ),
@@ -55,4 +60,5 @@ enum ButtonType {
   blue,
   white,
   home,
+  selected,
 }

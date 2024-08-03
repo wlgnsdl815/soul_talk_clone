@@ -72,11 +72,14 @@ class HomeScreen extends StatelessWidget {
                         color: AppColors.deepBlue.withOpacity(0.9),
                         borderRadius: BorderRadius.circular(6),
                       ),
-                      child: const Row(
+                      child: Row(
                         children: [
-                          Icon(Icons.search, color: AppColors.orange),
-                          Gap(10),
-                          Text('접속 중인 상담사 보기'),
+                          const Icon(Icons.search, color: AppColors.orange),
+                          const Gap(10),
+                          Text(
+                            '접속 중인 상담사 보기',
+                            style: AppTextStyle.body12R(color: Colors.white),
+                          ),
                         ],
                       ),
                     ),
@@ -106,7 +109,10 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const Icon(Icons.arrow_circle_right_outlined),
+                    const Icon(
+                      Icons.arrow_circle_right_outlined,
+                      color: Colors.white,
+                    ),
                   ],
                 ),
               ),
@@ -175,7 +181,7 @@ class HomeScreen extends StatelessWidget {
                 Center(
                   child: Row(
                     children: [
-                      const Icon(Icons.arrow_back_ios),
+                      const Icon(Icons.arrow_back_ios, color: Colors.white),
                       Expanded(
                         child: CarouselSlider(
                           items: cards,
@@ -196,7 +202,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const Icon(Icons.arrow_forward_ios),
+                      const Icon(Icons.arrow_forward_ios, color: Colors.white),
                     ],
                   ),
                 ),
@@ -271,7 +277,10 @@ class HomeScreen extends StatelessWidget {
                   rowCount: 3,
                   contentHeight: 100,
                   contents: [
-                    const Text('싱글 연애운'),
+                    Text(
+                      '싱글 연애운',
+                      style: AppTextStyle.body12R(color: Colors.white),
+                    ),
                   ],
                 ),
               ],
@@ -427,13 +436,23 @@ class HomeScreen extends StatelessWidget {
               context: context,
               title: '최근 상담 받은 상담사',
               hasButton: false,
-              children: [const Text('최근 상담 내역이 없습니다')],
+              children: [
+                Text(
+                  '최근 상담 내역이 없습니다',
+                  style: AppTextStyle.body12R(color: Colors.white),
+                )
+              ],
             ),
             _buildDefaultContainer(
               context: context,
               title: '찜한 상담사',
               hasButton: false,
-              children: [const Text('"상담사 찜하기"를 통해 빠르게 상담해 보세요')],
+              children: [
+                Text(
+                  '"상담사 찜하기"를 통해 빠르게 상담해 보세요',
+                  style: AppTextStyle.body12R(color: Colors.white),
+                )
+              ],
             ),
             const Gap(20),
           ],

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
+import 'package:soul_talk_clone/utils/navigation/app_routes.dart';
 import 'package:soul_talk_clone/utils/styles/app_text_styles.dart';
 import 'package:soul_talk_clone/widgets/community_tile.dart';
 
@@ -18,14 +20,20 @@ class CommunityScreen extends HookWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('소울 커뮤니티'),
+              Text(
+                '소울 커뮤니티',
+                style: AppTextStyle.body12R(color: Colors.white),
+              ),
               InkWell(
-                onTap: () {},
-                child: const Row(
+                onTap: () => Get.toNamed(AppRoutes.createPost),
+                child: Row(
                   children: [
-                    Icon(Icons.edit),
-                    Gap(10),
-                    Text('글쓰기'),
+                    const Icon(Icons.edit, color: Colors.white),
+                    const Gap(10),
+                    Text(
+                      '글쓰기',
+                      style: AppTextStyle.body12B(color: Colors.white),
+                    ),
                   ],
                 ),
               ),
@@ -50,6 +58,7 @@ class CommunityScreen extends HookWidget {
             indicatorSize: TabBarIndicatorSize.tab,
             indicatorWeight: 0.1,
             labelStyle: AppTextStyle.body14B(color: Colors.white),
+            unselectedLabelColor: Colors.white,
             dividerColor: Colors.transparent,
             indicator: const UnderlineTabIndicator(
               borderSide: BorderSide(

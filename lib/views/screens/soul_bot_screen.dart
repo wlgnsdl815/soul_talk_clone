@@ -31,7 +31,10 @@ class SoulBotScreen extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           const Gap(20),
-          const Text(Strings.soulBotExplanation),
+          Text(
+            Strings.soulBotExplanation,
+            style: AppTextStyle.body12R(color: Colors.white),
+          ),
           const Gap(20),
           Text(
             '유의사항',
@@ -90,7 +93,11 @@ class SoulBotScreen extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Icon(Icons.lightbulb_rounded, size: 20),
+          const Icon(
+            Icons.lightbulb_rounded,
+            size: 20,
+            color: Colors.white,
+          ),
           const Gap(10),
           Expanded(
             child: Text(

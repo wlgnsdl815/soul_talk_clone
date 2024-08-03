@@ -16,13 +16,14 @@ class MyCounselScreen extends HookWidget {
 
     return Column(
       children: [
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('전체 상담 리스트'),
-              Icon(Icons.search),
+              Text('전체 상담 리스트',
+                  style: AppTextStyle.body12B(color: Colors.white)),
+              const Icon(Icons.search, color: Colors.white),
             ],
           ),
         ),
@@ -70,6 +71,7 @@ class MyCounselScreen extends HookWidget {
             ),
             labelPadding: const EdgeInsets.symmetric(horizontal: 4),
             labelStyle: AppTextStyle.body14B(color: AppColors.orange),
+            unselectedLabelColor: Colors.white,
             dividerColor: Colors.transparent,
           ),
         ),
@@ -104,8 +106,12 @@ class MyCounselScreen extends HookWidget {
                   ],
                 ),
               ),
-              const Center(child: Text('완료된 상담이 없습니다.')),
-              const Center(child: Text('취소된 상담이 없습니다.')),
+              Center(
+                  child: Text('완료된 상담이 없습니다.',
+                      style: AppTextStyle.body14R(color: Colors.white))),
+              Center(
+                  child: Text('취소된 상담이 없습니다.',
+                      style: AppTextStyle.body14R(color: Colors.white))),
             ],
           ),
         ),

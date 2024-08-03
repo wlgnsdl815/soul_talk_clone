@@ -18,13 +18,19 @@ class MyPageScreen extends GetView<MyPageViewModel> {
               ? const Center(child: CircularProgressIndicator())
               : Column(
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.only(left: 20),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('내 정보'),
-                          Icon(Icons.notifications_outlined),
+                          Text(
+                            '내 정보',
+                            style: AppTextStyle.body12R(color: Colors.white),
+                          ),
+                          const Icon(
+                            Icons.notifications_outlined,
+                            color: Colors.white,
+                          ),
                         ],
                       ),
                     ),
@@ -126,7 +132,10 @@ class MyPageScreen extends GetView<MyPageViewModel> {
                                     style: AppTextStyle.body12B(
                                         color: AppColors.orange),
                                   ),
-                                  const Icon(Icons.navigate_next),
+                                  const Icon(
+                                    Icons.navigate_next,
+                                    color: Colors.white,
+                                  ),
                                 ],
                               ),
                             ),
@@ -151,7 +160,10 @@ class MyPageScreen extends GetView<MyPageViewModel> {
                                     controller.buttonItems[index].title,
                                     style: AppTextStyle.body12R(),
                                   ),
-                                  const Icon(Icons.navigate_next),
+                                  const Icon(
+                                    Icons.navigate_next,
+                                    color: Colors.white,
+                                  ),
                                 ],
                               ),
                             ),
