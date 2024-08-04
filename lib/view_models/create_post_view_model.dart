@@ -5,6 +5,7 @@ import 'package:soul_talk_clone/data_source/local/user_data_source.dart';
 import 'package:soul_talk_clone/data_source/remote/post_data_source.dart';
 import 'package:soul_talk_clone/models/post_model.dart';
 import 'package:soul_talk_clone/models/user_model.dart';
+import 'package:soul_talk_clone/widgets/community_tile.dart';
 import 'package:soul_talk_clone/widgets/default_dialog.dart';
 
 enum TagStatus {
@@ -90,13 +91,25 @@ class CreatePostViewModel extends GetxController {
 
   Future<void> createPost() async {
     UserModel? currentUser = await _userDataSource.getUserFromPreferences();
+    late String category;
+
+    if (selectedCategory.value == '칭찬해요') {
+      category = CommunityCategory.review.category;
+    } else if (selectedCategory.value == '고민있어요') {
+      category = CommunityCategory.concern.category;
+    } else if (selectedCategory.value == '질문있어요') {
+      category = CommunityCategory.question.category;
+    } else if (selectedCategory.value == '상담문의') {
+      category = CommunityCategory.reservation.category;
+    }
 
     PostModel newPost = PostModel(
-        userId: currentUser!.id,
-        category: selectedCategory.value!,
-        title: postTitle.value!,
-        content: postContent.value!,
-        imageUrls: imageList);
+      userId: currentUser!.id,
+      category: category,
+      title: postTitle.value!,
+      content: postContent.value!,
+      imageUrls: imageList,
+    );
 
     await _postDataSource.createPost(newPost);
   }

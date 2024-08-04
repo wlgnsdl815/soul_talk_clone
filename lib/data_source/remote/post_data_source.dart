@@ -5,18 +5,18 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 class PostDataSource extends GetxService {
   Future<void> createPost(PostModel post) async {
     final supabase = Supabase.instance.client;
+    await supabase.from('posts').insert(post.toMap());
     // final response =
     //     await supabase.from('posts').insert(post.toMap()).select().single();
-    // TODO: 생성한 게시글 필요하면 위 코드 사용
-    await supabase.from('posts').insert(post.toMap());
   }
 
-  // Future<List<PostModel>> getPosts() async {
-  Future<void> getPosts() async {
+  Future<List<PostModel>> getPosts() async {
     final supabase = Supabase.instance.client;
 
     final response = await supabase.from('posts').select();
+    List<PostModel> postList =
+        response.map((e) => PostModel.fromMap(e)).toList();
 
-    print(response);
+    return postList;
   }
 }

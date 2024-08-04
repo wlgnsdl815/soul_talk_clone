@@ -4,7 +4,9 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:soul_talk_clone/utils/navigation/app_routes.dart';
 import 'package:soul_talk_clone/utils/styles/app_text_styles.dart';
+import 'package:soul_talk_clone/view_models/community_view_model.dart';
 import 'package:soul_talk_clone/widgets/community_tile.dart';
+import 'package:soul_talk_clone/widgets/post_tile.dart';
 
 class CommunityScreen extends HookWidget {
   const CommunityScreen({super.key});
@@ -13,6 +15,8 @@ class CommunityScreen extends HookWidget {
   Widget build(BuildContext context) {
     final tabController =
         useTabController(initialLength: CommunityCategory.values.length);
+    final controller = Get.find<CommunityViewModel>();
+
     return Column(
       children: [
         Padding(
@@ -66,19 +70,43 @@ class CommunityScreen extends HookWidget {
                 width: 1,
               ),
             ),
+            onTap: (index) {
+              if (index == 0) {
+                controller.filteredPostList.value = controller.postList;
+              } else {
+                final selectedCategory = CommunityCategory.values[index];
+                controller.getPostsByCategory(selectedCategory);
+              }
+            },
           ),
         ),
         Expanded(
-          child: TabBarView(
-            controller: tabController,
-            children: CommunityCategory.values.map((category) {
-              return Center(
-                child: Text(
-                  '${category.category} 화면',
-                  style: AppTextStyle.body14R(color: Colors.white),
-                ),
+          child: Obx(
+            () {
+              if (controller.isLoading.value) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              if (controller.filteredPostList.isEmpty) {
+                return Center(
+                  child: Text(
+                    '게시글이 없습니다.',
+                    style: AppTextStyle.body14R(color: Colors.white),
+                  ),
+                );
+              }
+
+              return ListView.builder(
+                itemCount: controller.filteredPostList.length,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                itemBuilder: (context, index) {
+                  final post = controller.filteredPostList[index];
+                  return PostTile(post: post);
+                },
               );
-            }).toList(),
+            },
           ),
         ),
       ],

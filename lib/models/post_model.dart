@@ -25,6 +25,7 @@ class PostModel {
 
   Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'user_id': userId,
       'category': category,
       'title': title,
@@ -49,7 +50,8 @@ class PostModel {
       comments: map['comments'] ?? [],
       commentCount: map['comment_count'] ?? 0,
       likesCount: map['likes_count'] ?? 0,
-      imageUrls: map['image_urls'] ?? [],
+      imageUrls:
+          map['image_urls'] is List ? List<String>.from(map['image_urls']) : [],
     );
   }
 }
