@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:soul_talk_clone/utils/navigation/app_routes.dart';
 import 'package:soul_talk_clone/utils/styles/app_text_styles.dart';
 import 'package:soul_talk_clone/view_models/community_view_model.dart';
@@ -16,6 +17,8 @@ class CommunityScreen extends HookWidget {
     final tabController =
         useTabController(initialLength: CommunityCategory.values.length);
     final controller = Get.find<CommunityViewModel>();
+    final refreshController =
+        useMemoized(() => RefreshController(initialRefresh: false));
 
     return Column(
       children: [
@@ -73,9 +76,11 @@ class CommunityScreen extends HookWidget {
             onTap: (index) {
               if (index == 0) {
                 controller.filteredPostList.value = controller.postList;
+                controller.selectedCategory = CommunityCategory.all;
               } else {
                 final selectedCategory = CommunityCategory.values[index];
                 controller.getPostsByCategory(selectedCategory);
+                controller.selectedCategory = selectedCategory;
               }
             },
           ),
@@ -97,14 +102,20 @@ class CommunityScreen extends HookWidget {
                 );
               }
 
-              return ListView.builder(
-                itemCount: controller.filteredPostList.length,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                itemBuilder: (context, index) {
-                  final post = controller.filteredPostList[index];
-                  return PostTile(post: post);
-                },
+              return SmartRefresher(
+                controller: refreshController,
+                header: MaterialClassicHeader(),
+                onRefresh: () =>
+                    controller.onRefresh(refreshController: refreshController),
+                child: ListView.builder(
+                  itemCount: controller.filteredPostList.length,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  itemBuilder: (context, index) {
+                    final post = controller.filteredPostList[index];
+                    return PostTile(post: post);
+                  },
+                ),
               );
             },
           ),
