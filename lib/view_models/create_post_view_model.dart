@@ -112,5 +112,6 @@ class CreatePostViewModel extends GetxController {
     );
 
     await _postDataSource.createPost(newPost);
+    Get.back();
   }
 }

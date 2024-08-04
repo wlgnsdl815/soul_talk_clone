@@ -1,3 +1,5 @@
+import 'package:soul_talk_clone/models/user_model.dart';
+
 class PostModel {
   final String? id;
   final String userId;
@@ -9,6 +11,7 @@ class PostModel {
   final int? commentCount;
   final int? likesCount;
   final List<String>? imageUrls;
+  final UserModel? author;
 
   PostModel({
     this.id,
@@ -21,11 +24,11 @@ class PostModel {
     this.commentCount,
     this.likesCount,
     this.imageUrls,
+    this.author,
   });
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
       'user_id': userId,
       'category': category,
       'title': title,
@@ -52,6 +55,7 @@ class PostModel {
       likesCount: map['likes_count'] ?? 0,
       imageUrls:
           map['image_urls'] is List ? List<String>.from(map['image_urls']) : [],
+      author: map['users'] != null ? UserModel.fromMap(map['users']) : null,
     );
   }
 }

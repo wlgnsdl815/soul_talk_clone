@@ -27,7 +27,7 @@ class CommunityViewModel extends GetxController {
   void onTabBarTap({required int index}) {
     if (index == 0) {
       filteredPostList.value = postList;
-    } else {}
+    }
   }
 
   @override
