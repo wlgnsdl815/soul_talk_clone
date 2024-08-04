@@ -47,7 +47,7 @@ class MainPage extends GetView<MainViewModel> {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.smart_toy),
-              label: '소울 봇',
+              label: '소울봇',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.people),

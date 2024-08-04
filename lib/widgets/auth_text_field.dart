@@ -30,6 +30,7 @@ class AuthTextField extends HookWidget {
           controller: textController,
           decoration: InputDecoration(
             hintText: hintText,
+            hintStyle: AppTextStyle.body12R(),
             filled: true,
             fillColor: Colors.blueGrey.shade700.withOpacity(0.4),
             border: OutlineInputBorder(

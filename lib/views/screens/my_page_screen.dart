@@ -12,11 +12,11 @@ class MyPageScreen extends GetView<MyPageViewModel> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: SingleChildScrollView(
-        child: Obx(
-          () => controller.isLoading.value == true
-              ? const Center(child: CircularProgressIndicator())
-              : Column(
+      child: Obx(
+        () => controller.isLoading.value
+            ? const Center(child: CircularProgressIndicator())
+            : SingleChildScrollView(
+                child: Column(
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(left: 20),
@@ -49,11 +49,9 @@ class MyPageScreen extends GetView<MyPageViewModel> {
                           : const CircleAvatar(),
                     ),
                     const Gap(10),
-                    Obx(
-                      () => Text(
-                        controller.currentUser.value!.name,
-                        style: AppTextStyle.body14R(),
-                      ),
+                    Text(
+                      controller.currentUser.value!.name,
+                      style: AppTextStyle.body14R(),
                     ),
                     Text(
                       '고객님의 소울톡 앱은 1.0.0 최신 버전입니다',
@@ -173,7 +171,7 @@ class MyPageScreen extends GetView<MyPageViewModel> {
                     ),
                   ],
                 ),
-        ),
+              ),
       ),
     );
   }

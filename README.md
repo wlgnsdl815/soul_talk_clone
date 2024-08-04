@@ -1,16 +1,47 @@
-# soul_talk_clone
+# 소울톡 Clone
 
-A new Flutter project.
+## 구현된 기능 및 UI
 
-## Getting Started
+### 💡 기능
+- 로그인/회원가입 (구글 소셜로그인)
+- 커뮤니티 게시글 불러오기
+- 카테고리별 게시글 분류
+- 게시글 작성
+- 로그아웃
 
-This project is a starting point for a Flutter application.
+### 📱 UI
+- 스플래시
+- 로그인/회원가입
+- 홈 메인 화면
+- 내 상담 메인 화면
+- 소울봇 메인 화면
+- 커뮤니티 메인 화면
+    - 게시글 작성 화면
+- 내 정보 메인 화면
 
-A few resources to get you started if this is your first Flutter project:
+## 🛠️ 사용된 기술
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Flutter
+- Dart
+- Supabase
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## ⚙️ 개선한 부분
+- 스플래시 화면: 앱 시작 시 보이던 흰 바탕을 앱 배경 색상에 맞게 수정했습니다.
+
+- 홈 탭: 가로 스크롤링이 조금 더 자연스럽게 동작하도록 개선했습니다.
+
+- 커뮤니티 탭: 카테고리별 게시판의 데이터 요청을 최소화하여 효율성을 높였습니다.
+
+
+
+## 🥰 좋았던 점
+
+- Supabase 활용: Firebase 대신 Supabase를 데이터베이스 및 인증 서비스로 사용하여, SQL 기반의 쿼리 언어를 통해 효과적인 데이터 처리가 가능했습니다. Supabase의 도입으로 더 정교한 데이터 관리가 가능해졌습니다.
+
+- CustomPaint 활용: CustomPaint를 사용하여 복잡한 그래픽과 애니메이션 효과를 세밀하게 조정하고, 앱의 시각적 요소를 더욱 매력적으로 만들었습니다. 특히, 앱 배경에 움직이는 빛 효과를 구현하여 사용자 경험을 한층 향상시킬 수 있었습니다.
+
+## 😅 아쉬웠던 점
+
+- 기능 구현의 제한: 구현하지 못한 기능들이 있어 전체적인 기능을 완벽하게 구현하지 못했습니다.
+
+- 기술 전환으로 인한 시간 소모: 프로젝트 초반에 Supabase를 도입하지 않고 Firebase로 개발을 진행하다가 후에 Supabase로 전환하느라 시간이 소모되었습니다.

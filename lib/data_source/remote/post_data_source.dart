@@ -6,19 +6,8 @@ class PostDataSource extends GetxService {
   Future<void> createPost(PostModel post) async {
     final supabase = Supabase.instance.client;
     await supabase.from('posts').insert(post.toMap());
-    // final response =
-    //     await supabase.from('posts').insert(post.toMap()).select().single();
   }
 
-  // Future<List<PostModel>> getPosts() async {
-  //   final supabase = Supabase.instance.client;
-
-  //   final response = await supabase.from('posts').select('*, users(*)');
-
-  //   return (response as List).map<PostModel>((e) {
-  //     return PostModel.fromMap(e);
-  //   }).toList();
-  // }
   Future<List<PostModel>> getPosts() async {
     final supabase = Supabase.instance.client;
 

@@ -26,9 +26,15 @@ class SignUpPage extends GetView<SignUpViewModel> {
                   ListTile(
                     leading: IconButton(
                       onPressed: () => Get.back(),
-                      icon: const Icon(Icons.arrow_back_ios),
+                      icon: const Icon(
+                        Icons.arrow_back_ios,
+                        color: Colors.white,
+                      ),
                     ),
-                    title: const Text('회원가입'),
+                    title: Text(
+                      '회원가입',
+                      style: AppTextStyle.body14R(),
+                    ),
                   ),
                   const Gap(30),
                   _buildTextField(

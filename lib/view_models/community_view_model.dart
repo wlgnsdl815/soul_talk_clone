@@ -18,6 +18,7 @@ class CommunityViewModel extends GetxController {
     if (selectedCategory != CommunityCategory.all) {
       getPostsByCategory(selectedCategory);
     }
+
     // await Future.delayed(const Duration(milliseconds: 1000));
     refreshController.refreshCompleted();
   }

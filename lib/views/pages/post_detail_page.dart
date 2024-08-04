@@ -86,7 +86,7 @@ class PostDetailPage extends HookWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 5),
                     child: Text(
-                      controller.currentPost.title,
+                      controller.currentPost.content,
                       style: AppTextStyle.body14B(
                         color: Colors.white,
                       ),
