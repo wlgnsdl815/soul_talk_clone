@@ -183,24 +183,26 @@ class CreatePostPage extends GetView<CreatePostViewModel> {
                       }
                     }),
                     const Gap(20),
-                    GestureDetector(
-                      onTap: controller.buttonDisabled.value == true
-                          ? () {
-                              controller.createPost();
-                            }
-                          : () {
-                              print('object');
-                            },
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        padding: const EdgeInsets.symmetric(vertical: 15),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(16)),
-                        child: Text(
-                          '글쓰기',
-                          style: AppTextStyle.body12B(color: Colors.black87),
-                          textAlign: TextAlign.center,
+                    Obx(
+                      () => GestureDetector(
+                        onTap: controller.buttonDisabled.value == true ||
+                                controller.isLoading.value
+                            ? null
+                            : () => controller.createPost(),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          padding: const EdgeInsets.symmetric(vertical: 15),
+                          decoration: BoxDecoration(
+                            color: controller.buttonDisabled.value
+                                ? Colors.black.withOpacity(0.2)
+                                : Colors.white,
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Text(
+                            '글쓰기',
+                            style: AppTextStyle.body12B(color: Colors.black87),
+                            textAlign: TextAlign.center,
+                          ),
                         ),
                       ),
                     )

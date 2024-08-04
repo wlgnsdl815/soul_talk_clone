@@ -30,11 +30,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      // theme: ThemeData.dark().copyWith(
-      //   dialogTheme: const DialogTheme(
-      //     backgroundColor: Colors.white,
-      //   ),
-      // ),
       getPages: AppPages.pages,
       initialBinding: InitialBinding(),
       initialRoute: AppRoutes.splash,

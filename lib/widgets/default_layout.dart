@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:soul_talk_clone/widgets/fly_light.dart';
 
 class DefaultLayout extends StatelessWidget {
@@ -11,18 +12,20 @@ class DefaultLayout extends StatelessWidget {
   final bool? isAppBarTitleCenter;
   final GestureTapCallback? onTap;
   final PreferredSizeWidget? appBarBottom;
+  final bool? hasSafeArea;
 
   const DefaultLayout({
     super.key,
     this.bottomNavigationBar,
     required this.body,
-    this.appBar,
     this.hasAppBar = false,
+    this.appBar,
     this.appBarTitle,
     this.appBarActions,
     this.isAppBarTitleCenter = true,
     this.onTap,
     this.appBarBottom,
+    this.hasSafeArea,
   });
 
   @override
@@ -42,6 +45,7 @@ class DefaultLayout extends StatelessWidget {
               bottom: appBarBottom,
             ),
       body: FlyLight(
+        hasSafeArea: hasSafeArea,
         child: body,
       ),
       bottomNavigationBar: bottomNavigationBar,

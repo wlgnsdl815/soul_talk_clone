@@ -104,7 +104,7 @@ class CommunityScreen extends HookWidget {
 
               return SmartRefresher(
                 controller: refreshController,
-                header: MaterialClassicHeader(),
+                header: const MaterialClassicHeader(),
                 onRefresh: () =>
                     controller.onRefresh(refreshController: refreshController),
                 child: ListView.builder(
@@ -113,7 +113,11 @@ class CommunityScreen extends HookWidget {
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   itemBuilder: (context, index) {
                     final post = controller.filteredPostList[index];
-                    return PostTile(post: post);
+                    return PostTile(
+                      post: post,
+                      onTap: () =>
+                          Get.toNamed(AppRoutes.postDetail, arguments: post),
+                    );
                   },
                 ),
               );

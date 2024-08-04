@@ -25,6 +25,7 @@ class CreatePostViewModel extends GetxController {
   Rxn<String> postContent = Rxn();
   RxList<String> imageList = <String>[].obs;
   RxBool buttonDisabled = true.obs;
+  RxBool isLoading = false.obs;
 
   void selectedCounselor() {
     tagStatus.value = TagStatus.tagged;
@@ -90,28 +91,53 @@ class CreatePostViewModel extends GetxController {
   void deleteImage(int index) => imageList.removeAt(index);
 
   Future<void> createPost() async {
-    UserModel? currentUser = await _userDataSource.getUserFromPreferences();
-    late String category;
+    isLoading.value = true;
 
-    if (selectedCategory.value == '칭찬해요') {
-      category = CommunityCategory.review.category;
-    } else if (selectedCategory.value == '고민있어요') {
-      category = CommunityCategory.concern.category;
-    } else if (selectedCategory.value == '질문있어요') {
-      category = CommunityCategory.question.category;
-    } else if (selectedCategory.value == '상담문의') {
-      category = CommunityCategory.reservation.category;
+    try {
+      UserModel? currentUser = await _userDataSource.getUserFromPreferences();
+      late String category;
+
+      if (selectedCategory.value == '칭찬해요') {
+        category = CommunityCategory.review.category;
+      } else if (selectedCategory.value == '고민있어요') {
+        category = CommunityCategory.concern.category;
+      } else if (selectedCategory.value == '질문있어요') {
+        category = CommunityCategory.question.category;
+      } else if (selectedCategory.value == '상담문의') {
+        category = CommunityCategory.reservation.category;
+      }
+
+      PostModel newPost = PostModel(
+        userId: currentUser!.id,
+        category: category,
+        title: postTitle.value!,
+        content: postContent.value!,
+        imageUrls: imageList,
+      );
+
+      await _postDataSource.createPost(newPost);
+    } finally {
+      isLoading.value = false;
+      Get.back();
     }
+  }
 
-    PostModel newPost = PostModel(
-      userId: currentUser!.id,
-      category: category,
-      title: postTitle.value!,
-      content: postContent.value!,
-      imageUrls: imageList,
-    );
+  void updateButtonState() {
+    final isCategorySelected = selectedCategory.value != null;
+    final isTitleFilled =
+        postTitle.value != null && postTitle.value!.isNotEmpty;
+    final isContentFilled =
+        postContent.value != null && postContent.value!.isNotEmpty;
 
-    await _postDataSource.createPost(newPost);
-    Get.back();
+    buttonDisabled.value =
+        !(isCategorySelected && isTitleFilled && isContentFilled);
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    selectedCategory.listen((_) => updateButtonState());
+    postTitle.listen((_) => updateButtonState());
+    postContent.listen((_) => updateButtonState());
   }
 }

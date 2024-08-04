@@ -1,6 +1,8 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
+
 import 'package:soul_talk_clone/models/post_model.dart';
 import 'package:soul_talk_clone/utils/styles/app_colors.dart';
 import 'package:soul_talk_clone/utils/styles/app_text_styles.dart';
@@ -8,29 +10,35 @@ import 'package:soul_talk_clone/widgets/image_loader.dart';
 
 class PostTile extends StatelessWidget {
   final PostModel post;
+  final GestureTapCallback? onTap;
+
   const PostTile({
     super.key,
     required this.post,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(child: _buildPostContent()),
-            if (post.imageUrls != null && post.imageUrls!.isNotEmpty)
-              _buildPostImage(),
-          ],
-        ),
-        const Divider(
-          color: Colors.white70,
-          thickness: 0.5,
-        ),
-      ],
+    return InkWell(
+      onTap: onTap,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(child: _buildPostContent()),
+              if (post.imageUrls != null && post.imageUrls!.isNotEmpty)
+                _buildPostImage(),
+            ],
+          ),
+          const Divider(
+            color: Colors.white70,
+            thickness: 0.5,
+          ),
+        ],
+      ),
     );
   }
 

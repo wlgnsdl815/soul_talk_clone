@@ -1,14 +1,15 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:soul_talk_clone/utils/styles/app_colors.dart';
 
 class FlyLight extends StatefulWidget {
   final Widget child;
+  final bool? hasSafeArea;
 
   const FlyLight({
     super.key,
     required this.child,
+    this.hasSafeArea,
   });
 
   @override
@@ -52,7 +53,9 @@ class _FlyLightState extends State<FlyLight>
           child: SizedBox(
             width: double.infinity,
             height: double.infinity,
-            child: SafeArea(child: widget.child),
+            child: widget.hasSafeArea == null
+                ? SafeArea(child: widget.child)
+                : widget.child,
           ),
         );
       },

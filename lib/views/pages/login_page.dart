@@ -65,13 +65,17 @@ class LoginPage extends GetView<LoginViewModel> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text('로그인 정보 저장'),
+                  Text(
+                    '로그인 정보 저장',
+                    style: AppTextStyle.body12R(),
+                  ),
                   Obx(
                     () => Checkbox(
                       value: controller.saveLoginInfo.value,
                       onChanged: (value) =>
                           controller.saveLoginInfo.value = value!,
                       activeColor: Colors.white,
+                      checkColor: Colors.black87,
                     ),
                   ),
                 ],
