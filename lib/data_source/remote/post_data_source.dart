@@ -1,13 +1,14 @@
 import 'dart:io';
 
 import 'package:get/get.dart';
+import 'package:soul_talk_clone/data_source/remote/supabase_service.dart';
 import 'package:soul_talk_clone/models/post_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class PostDataSource extends GetxService {
-  Future<void> createPost(PostModel post) async {
-    final supabase = Supabase.instance.client;
+  final _supabaseClient = SupabaseService().client;
 
+  Future<void> createPost(PostModel post) async {
     if (post.imageUrls != null && post.imageUrls!.isNotEmpty) {
       final List<Future<String>> uploadFutures = [];
 
@@ -16,11 +17,13 @@ class PostDataSource extends GetxService {
         final String fileName =
             '${DateTime.now().millisecondsSinceEpoch}_${file.uri.pathSegments.last}';
 
-        final uploadFuture = supabase.storage
+        final uploadFuture = _supabaseClient.storage
             .from('images/post')
             .upload(fileName, file)
             .then((filePath) {
-          return supabase.storage.from('images/post').getPublicUrl(fileName);
+          return _supabaseClient.storage
+              .from('images/post')
+              .getPublicUrl(fileName);
         });
 
         uploadFutures.add(uploadFuture);
@@ -31,7 +34,7 @@ class PostDataSource extends GetxService {
       post = post.copyWith(imageUrls: uploadedUrls);
     }
 
-    await supabase.from('posts').insert(post.toMap());
+    await _supabaseClient.from('posts').insert(post.toMap());
   }
 
   Future<List<PostModel>> getPosts() async {
