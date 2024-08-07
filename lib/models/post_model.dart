@@ -58,4 +58,32 @@ class PostModel {
       author: map['users'] != null ? UserModel.fromMap(map['users']) : null,
     );
   }
+
+  PostModel copyWith({
+    String? id,
+    String? userId,
+    String? category,
+    String? title,
+    String? content,
+    DateTime? createdAt,
+    List<dynamic>? comments,
+    int? commentCount,
+    int? likesCount,
+    List<String>? imageUrls,
+    UserModel? author,
+  }) {
+    return PostModel(
+      id: id ?? this.id,
+      userId: userId ?? this.userId,
+      category: category ?? this.category,
+      title: title ?? this.title,
+      content: content ?? this.content,
+      createdAt: createdAt ?? this.createdAt,
+      comments: comments ?? this.comments,
+      commentCount: commentCount ?? this.commentCount,
+      likesCount: likesCount ?? this.likesCount,
+      imageUrls: imageUrls ?? this.imageUrls,
+      author: author ?? this.author,
+    );
+  }
 }
