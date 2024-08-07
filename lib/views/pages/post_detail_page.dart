@@ -82,6 +82,24 @@ class PostDetailPage extends HookWidget {
                       ),
                     ),
                   ),
+                  if (controller.currentPost.imageUrls!.isNotEmpty)
+                    Column(
+                      children: [
+                        const Gap(30),
+                        SizedBox(
+                          height: 200,
+                          child: PageView.builder(
+                            itemCount: controller.currentPost.imageUrls!.length,
+                            itemBuilder: (context, index) {
+                              return ImageLoader(
+                                imagePath:
+                                    controller.currentPost.imageUrls![index],
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
                   const Gap(40),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -135,7 +153,7 @@ class PostDetailPage extends HookWidget {
   }
 
   String _buildCreatedAt(DateTime date) {
-    final formattedDate = DateFormat('yy.MM.dd H:m').format(date);
+    final formattedDate = DateFormat('yy.MM.dd HH:mm').format(date);
     return formattedDate;
   }
 }
