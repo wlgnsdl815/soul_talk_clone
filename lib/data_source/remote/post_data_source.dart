@@ -8,6 +8,30 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 class PostDataSource extends GetxService {
   final _supabaseClient = SupabaseService().client;
 
+  Future<List<PostModel>> getPosts() async {
+    final supabase = Supabase.instance.client;
+
+    final response = await supabase
+        .from('posts')
+        .select('*, users(*)')
+        .order('created_at', ascending: false);
+
+    var posts =
+        (response as List).map<PostModel>((e) => PostModel.fromMap(e)).toList();
+    posts.sort((a, b) {
+      if (a.category == '공지' && b.category != '공지') {
+        return -1;
+      }
+      if (a.category != '공지' && b.category == '공지') {
+        return 1;
+      }
+
+      return b.createdAt!.compareTo(a.createdAt!);
+    });
+
+    return posts;
+  }
+
   Future<void> createPost(PostModel post) async {
     if (post.imageUrls != null && post.imageUrls!.isNotEmpty) {
       final List<Future<String>> uploadFutures = [];
@@ -35,29 +59,5 @@ class PostDataSource extends GetxService {
     }
 
     await _supabaseClient.from('posts').insert(post.toMap());
-  }
-
-  Future<List<PostModel>> getPosts() async {
-    final supabase = Supabase.instance.client;
-
-    final response = await supabase
-        .from('posts')
-        .select('*, users(*)')
-        .order('created_at', ascending: false);
-
-    var posts =
-        (response as List).map<PostModel>((e) => PostModel.fromMap(e)).toList();
-    posts.sort((a, b) {
-      if (a.category == '공지' && b.category != '공지') {
-        return -1;
-      }
-      if (a.category != '공지' && b.category == '공지') {
-        return 1;
-      }
-
-      return b.createdAt!.compareTo(a.createdAt!);
-    });
-
-    return posts;
   }
 }

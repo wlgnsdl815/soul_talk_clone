@@ -9,8 +9,7 @@ class CommentDataSource extends GetxService {
     final response = await _supabaseClient
         .from('comments')
         .select('*, users(*)')
-        .eq('post_id', postId)
-        .order('created_at', ascending: false);
+        .eq('post_id', postId);
 
     List<CommentModel> comments =
         response.map((e) => CommentModel.fromMap(e)).toList();

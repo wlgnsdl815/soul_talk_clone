@@ -5,8 +5,8 @@ class CommentModel {
   final int postId;
   final String authorId;
   final String content;
-  final DateTime createdAt;
-  final int likesCount;
+  final DateTime? createdAt;
+  final int? likesCount;
   final UserModel? author;
 
   CommentModel({
@@ -14,8 +14,8 @@ class CommentModel {
     required this.postId,
     required this.authorId,
     required this.content,
-    required this.createdAt,
-    required this.likesCount,
+    this.createdAt,
+    this.likesCount,
     this.author,
   });
 
@@ -24,8 +24,8 @@ class CommentModel {
       'post_id': postId,
       'user_id': authorId,
       'content': content,
-      'created_at': createdAt.millisecondsSinceEpoch,
-      'likes_count': likesCount,
+      'created_at': DateTime.now().toIso8601String(),
+      'likes_count': likesCount ?? 0,
     };
   }
 
@@ -37,8 +37,28 @@ class CommentModel {
       content: map['content'] as String,
       createdAt:
           DateTime.parse(map['created_at'] ?? DateTime.now().toIso8601String()),
-      likesCount: map['likes_count'] as int,
+      likesCount: map['likes_count'] ?? 0,
       author: map['users'] != null ? UserModel.fromMap(map['users']) : null,
+    );
+  }
+
+  CommentModel copyWith({
+    int? id,
+    int? postId,
+    String? authorId,
+    String? content,
+    DateTime? createdAt,
+    int? likesCount,
+    UserModel? author,
+  }) {
+    return CommentModel(
+      id: id ?? this.id,
+      postId: postId ?? this.postId,
+      authorId: authorId ?? this.authorId,
+      content: content ?? this.content,
+      createdAt: createdAt ?? this.createdAt,
+      likesCount: likesCount ?? this.likesCount,
+      author: author ?? this.author,
     );
   }
 }

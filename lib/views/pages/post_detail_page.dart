@@ -18,6 +18,7 @@ class PostDetailPage extends HookWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<PostDetailViewModel>();
     final textController = useTextEditingController();
+    final scrollController = useScrollController();
 
     return DefaultLayout(
       hasSafeArea: false,
@@ -45,6 +46,7 @@ class PostDetailPage extends HookWidget {
                 () => controller.isLoading.value == true
                     ? const Center(child: CircularProgressIndicator())
                     : SingleChildScrollView(
+                        controller: scrollController,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -127,7 +129,17 @@ class PostDetailPage extends HookWidget {
                               ),
                             ),
                             const Gap(20),
-                            ListView.builder(
+                            ListView.separated(
+                                separatorBuilder: (context, index) =>
+                                    const Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 12),
+                                      child: Divider(
+                                        color: Colors.grey,
+                                        thickness: 0.5,
+                                        height: 0,
+                                      ),
+                                    ),
                                 physics: const NeverScrollableScrollPhysics(),
                                 padding: EdgeInsets.zero,
                                 shrinkWrap: true,
@@ -147,24 +159,35 @@ class PostDetailPage extends HookWidget {
             children: [
               TextField(
                 controller: textController,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   filled: true,
                   fillColor: Colors.white,
                   hintText: '댓글을 입력해주세요',
-                  hintStyle: TextStyle(fontSize: 12),
+                  hintStyle: const TextStyle(fontSize: 12),
                   contentPadding:
-                      EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  suffixIcon: Icon(
-                    Icons.send,
-                    color: Colors.grey,
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      controller.createComment(scrollController);
+                      textController.clear();
+                    },
+                    icon: const Icon(
+                      Icons.send,
+                      color: Colors.grey,
+                    ),
                   ),
-                  focusedBorder: UnderlineInputBorder(
+                  focusedBorder: const UnderlineInputBorder(
                     borderSide: BorderSide.none,
                   ),
-                  enabledBorder: UnderlineInputBorder(
+                  enabledBorder: const UnderlineInputBorder(
                     borderSide: BorderSide.none,
                   ),
                 ),
+                onChanged: (value) => controller.content.value = value,
+                onSubmitted: (_) {
+                  controller.createComment(scrollController);
+                  textController.clear();
+                },
               ),
               Container(color: Colors.white, height: 40),
             ],
@@ -172,11 +195,6 @@ class PostDetailPage extends HookWidget {
         ],
       ),
     );
-  }
-
-  String _buildCreatedAt(DateTime date) {
-    final formattedDate = DateFormat('yy.MM.dd HH:mm').format(date);
-    return formattedDate;
   }
 }
 
@@ -208,36 +226,53 @@ class _CommentTile extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                comment.author!.name,
-                style: AppTextStyle.body14B(),
+              Row(
+                children: [
+                  Text(
+                    comment.author!.name,
+                    style: AppTextStyle.body14B(),
+                  ),
+                  const Spacer(),
+                  const Icon(
+                    Icons.favorite,
+                    color: Colors.grey,
+                    size: 20,
+                  ),
+                  const Gap(5),
+                  Text(
+                    comment.likesCount.toString(),
+                    style: AppTextStyle.body12R(),
+                  ),
+                  const Gap(10),
+                  const Icon(
+                    Icons.more_horiz,
+                    color: Colors.grey,
+                    size: 20,
+                  ),
+                ],
               ),
               const Gap(10),
               Text(
                 comment.content,
                 style: AppTextStyle.body14R(),
               ),
+              const Gap(10),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: Text(
+                  _buildCreatedAt(comment.createdAt!),
+                  style: AppTextStyle.body12R(color: Colors.grey),
+                ),
+              ),
             ],
           ),
-        ),
-        // const Spacer(),
-        const Icon(
-          Icons.favorite,
-          color: Colors.grey,
-          size: 20,
-        ),
-        const Gap(5),
-        Text(
-          '0',
-          style: AppTextStyle.body12R(),
-        ),
-        const Gap(10),
-        const Icon(
-          Icons.more_horiz,
-          color: Colors.grey,
-          size: 20,
         ),
       ],
     );
   }
+}
+
+String _buildCreatedAt(DateTime date) {
+  final formattedDate = DateFormat('yy.MM.dd HH:mm').format(date);
+  return formattedDate;
 }
