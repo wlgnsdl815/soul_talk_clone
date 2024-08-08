@@ -5,6 +5,19 @@ import 'package:soul_talk_clone/models/comment_model.dart';
 class CommentDataSource extends GetxService {
   final _supabaseClient = SupabaseService().client;
 
+  Future<List<CommentModel>> getComments(int postId) async {
+    final response = await _supabaseClient
+        .from('comments')
+        .select('*, users(*)')
+        .eq('post_id', postId)
+        .order('created_at', ascending: false);
+
+    List<CommentModel> comments =
+        response.map((e) => CommentModel.fromMap(e)).toList();
+
+    return comments;
+  }
+
   Future<CommentModel> createComment(CommentModel comment) async {
     final response = await _supabaseClient
         .from('comments')

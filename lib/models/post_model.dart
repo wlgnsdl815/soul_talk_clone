@@ -1,13 +1,12 @@
 import 'package:soul_talk_clone/models/user_model.dart';
 
 class PostModel {
-  final String? id;
+  final int? id;
   final String userId;
   final String category;
   final String title;
   final String content;
   final DateTime? createdAt;
-  final List<dynamic>? comments;
   final int? commentCount;
   final int? likesCount;
   final List<String>? imageUrls;
@@ -20,7 +19,6 @@ class PostModel {
     required this.title,
     required this.content,
     this.createdAt,
-    this.comments,
     this.commentCount,
     this.likesCount,
     this.imageUrls,
@@ -34,10 +32,9 @@ class PostModel {
       'title': title,
       'content': content,
       'created_at': DateTime.now().toIso8601String(),
-      'comments': comments,
-      'comment_count': commentCount,
-      'likes_count': likesCount,
-      'image_urls': imageUrls,
+      'comment_count': commentCount ?? 0,
+      'likes_count': likesCount ?? 0,
+      'image_urls': imageUrls ?? [],
     };
   }
 
@@ -50,7 +47,6 @@ class PostModel {
       content: map['content'] ?? '',
       createdAt:
           DateTime.parse(map['created_at'] ?? DateTime.now().toIso8601String()),
-      comments: map['comments'] ?? [],
       commentCount: map['comment_count'] ?? 0,
       likesCount: map['likes_count'] ?? 0,
       imageUrls:
@@ -60,13 +56,12 @@ class PostModel {
   }
 
   PostModel copyWith({
-    String? id,
+    int? id,
     String? userId,
     String? category,
     String? title,
     String? content,
     DateTime? createdAt,
-    List<dynamic>? comments,
     int? commentCount,
     int? likesCount,
     List<String>? imageUrls,
@@ -79,7 +74,6 @@ class PostModel {
       title: title ?? this.title,
       content: content ?? this.content,
       createdAt: createdAt ?? this.createdAt,
-      comments: comments ?? this.comments,
       commentCount: commentCount ?? this.commentCount,
       likesCount: likesCount ?? this.likesCount,
       imageUrls: imageUrls ?? this.imageUrls,
